@@ -78,8 +78,14 @@ function App() {
       </h1>
       <p>
         Convert a https://coolors.co/ palette into the closest TailwindCss
-        classes,
+        classes. <span className="font-bold">Just paste the URL</span>
       </p>
+      <a
+        className="text-blue-400 underline"
+        href="https://github.com/camunoz2/coolors-to-tailwindcss"
+      >
+        Github Repo
+      </a>
       <div className="flex flex-row gap-2 py-12">
         <input
           title="rgb values"
