@@ -25,7 +25,7 @@ function App() {
     const rgbValues = rgb.match(/\b[0-9a-f]{6}\b/gi);
     console.log(rgbValues);
 
-    const tailwindColors = rgbValues?.map((rgbValue) => {
+    const tailwindColors = rgbValues!.map((rgbValue) => {
       const hex = rgbValue.toLowerCase();
       let minDistance = Number.MAX_VALUE;
       let closestColor = "";
