@@ -1,5 +1,5 @@
-import { useState } from "react";
 import "./App.css";
+import { useState } from "react";
 import colors from "./utils/colors";
 
 function App() {
@@ -22,9 +22,10 @@ function App() {
   }
 
   function transformRGBToTailwind(rgb: string): string[] {
-    const rgbValues = rgb.split("palette/")[1].split("-");
+    const rgbValues = rgb.match(/\b[0-9a-f]{6}\b/gi);
+    console.log(rgbValues);
 
-    const tailwindColors = rgbValues.map((rgbValue) => {
+    const tailwindColors = rgbValues?.map((rgbValue) => {
       const hex = rgbValue.toLowerCase();
       let minDistance = Number.MAX_VALUE;
       let closestColor = "";
