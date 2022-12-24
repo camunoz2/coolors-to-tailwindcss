@@ -6,6 +6,7 @@ function App() {
   const [rgb, setRgb] = useState("");
   const [tailwindClasses, setTailwindClasses] = useState([""]);
 
+  // This func transform the tw colors passed as a COLOR: {SHADE: "HEX"} to COLOR-SHADE = HEX
   function transformColors(colors: {
     [key: string]: { [key: string]: string };
   }) {
