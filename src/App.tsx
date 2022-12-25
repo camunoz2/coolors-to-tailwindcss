@@ -1,10 +1,17 @@
-import "./App.css";
-import { useState } from "react";
+import "./index.css";
+
+import { useEffect, useState } from "react";
 import colors from "./utils/colors";
 
 function App() {
-  const [rgb, setRgb] = useState("");
+  const [rgb, setRgb] = useState(
+    "https://coolors.co/palette/cdb4db-ffc8dd-ffafcc-bde0fe-a2d2ff"
+  );
   const [tailwindClasses, setTailwindClasses] = useState([""]);
+
+  useEffect(() => {
+    transformRGBToTailwind(rgb);
+  }, []);
 
   // This func transform the tw colors passed as a COLOR: {SHADE: "HEX"} to COLOR-SHADE = HEX
   function transformColors(colors: {
@@ -23,6 +30,7 @@ function App() {
   }
 
   function transformRGBToTailwind(rgb: string): string[] {
+    console.log("ASDD");
     const rgbValues = rgb.match(/\b[0-9a-f]{6}\b/gi);
     console.log(rgbValues);
 
@@ -67,56 +75,57 @@ function App() {
   }
 
   return (
-    <div className="absolute top-0 left-0 flex flex-col items-center justify-center h-screen w-screen bg-slate-100 px-96">
-      <h1 className="text-2xl font-bold">
+    <div className="container mx-auto px-4 flex flex-col h-full pb-12">
+      <nav className="border-b flex justify-between mb-6 pt-6">
+        <h2 className="font-black text-2xl">COOLORS-TO-TW</h2>
         <a
-          href="https://coolors.co/palettes/trending"
-          target="_blank"
-          rel="noopener"
+          className="text-xl"
+          href="https://github.com/camunoz2/coolors-to-tailwindcss"
         >
-          https://coolors.co/
-        </a>{" "}
-        to TailwindCSS (sort of)
-      </h1>
-      <p>
-        Convert a https://coolors.co/ palette into the closest TailwindCss
-        classes. <span className="font-bold">Just paste the URL</span>
-      </p>
-      <a
-        className="text-blue-400 underline"
-        href="https://github.com/camunoz2/coolors-to-tailwindcss"
-      >
-        Github Repo
-      </a>
-      <div className="flex flex-row gap-2 py-12">
-        <input
-          title="rgb values"
-          className="border border-teal-600 py-2 px-4 rounded-md"
-          onChange={(event) => handleInput(event.target.value)}
-        />
-        <button
-          className="bg-teal-600 py-2 px-4 rounded-md"
-          onClick={() => transformRGBToTailwind(rgb)}
-        >
-          Transform
-        </button>
+          Github
+        </a>
+      </nav>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
+          <div className="w-56">
+            <img className="h-10" src="/logo.svg" alt="" />
+          </div>
+          <input
+            title="ref"
+            onChange={(event) => handleInput(event.target.value)}
+            className="w-full rounded-sm text-slate-600 pl-4"
+          />
+          <button
+            className="bg-green-600 text-black hover:cursor-pointer hover:bg-green-500 rounded-sm px-4"
+            onClick={() => (rgb ? transformRGBToTailwind(rgb) : "")}
+          >
+            Transform
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-flow-col gap-2">
-        {tailwindClasses
-          ? tailwindClasses.map((item, index) => {
-              let tw = item;
-              return (
-                <div
-                  key={index}
-                  className={`${tw} w-24 h-24 text-center flex justify-center items-center rounded-md`}
-                >
-                  <p className="text-xs">{item}</p>
-                </div>
-              );
-            })
-          : ""}
+      <div className="bg-white h-full my-10 rounded-sm">
+        <div className="flex flex-col md:flex-row h-full gap-3 p-3 rounded-sm">
+          {tailwindClasses
+            ? tailwindClasses.map((item, index) => {
+                let tw = item;
+                return (
+                  <div
+                    onClick={() => navigator.clipboard.writeText(item)}
+                    key={index}
+                    className={`${tw} flex-1 text-center flex justify-center items-center rounded-sm cursor-pointer`}
+                  >
+                    <p className="text-xs mix-blend-difference">{item}</p>
+                  </div>
+                );
+              })
+            : ""}
+        </div>
       </div>
+      <a className="underline" href="https://arjeldev.vercel.app">
+        By ArjelDev
+      </a>
     </div>
   );
 }
